@@ -1,0 +1,914 @@
+:root {
+  --bg-main: #18181b;
+  --bg-sidebar: #09090b;
+  --bg-card: #27272a;
+  
+  --text-primary: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --text-red: #ef4444;
+
+  --whey-primary: #dc2626;
+  --whey-bright: #ef4444;
+  --whey-dark: #991b1b;
+  --whey-deep: #450a0a;
+  --whey-shadow: #7f1d1d;
+  --whey-border: #ef4444;
+  --whey-light-bg: rgba(220, 38, 38, 0.15);
+
+  --flame-color: #f97316;
+  --flame-shadow: #c2410c;
+  --flame-bg: rgba(249, 115, 22, 0.15);
+  --flame-border: #fdba74;
+
+  --sidebar-width: 256px;
+  --right-width: 330px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Fredoka', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* LAYOUT PRINCIPAL */
+.duo-layout {
+  display: flex;
+  justify-content: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  width: 100%;
+  position: relative;
+}
+
+.left-sidebar {
+  width: var(--sidebar-width);
+  border-right: 2px solid #27272a;
+  background: var(--bg-sidebar);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.wheylife-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wheylife-logo .logo-icon {
+  font-size: 2.1rem;
+  filter: drop-shadow(0 3px 6px rgba(220, 38, 38, 0.5));
+}
+
+.wheylife-logo .logo-text {
+  font-size: 1.65rem;
+  font-weight: 900;
+  color: var(--whey-bright);
+  letter-spacing: -0.5px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 18px;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #a1a1aa;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  text-align: left;
+}
+
+.nav-item .nav-icon { font-size: 1.35rem; }
+
+.nav-item:hover {
+  background: #27272a;
+  color: var(--text-primary);
+}
+
+.nav-item.active {
+  background: var(--whey-light-bg);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+.sidebar-filler { margin-top: auto; }
+
+.mascot-mini-card {
+  background: #27272a;
+  border: 2px solid #3f3f46;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mini-mascot-avatar { font-size: 1.8rem; }
+.mini-mascot-text { display: flex; flex-direction: column; }
+.mini-mascot-text strong { font-size: 0.86rem; color: #fca5a5; }
+.mini-mascot-text span { font-size: 0.75rem; color: #a1a1aa; }
+
+.mobile-top-header {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #09090b;
+  border-bottom: 2px solid #27272a;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.wheylife-logo-mobile {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--whey-bright);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mobile-stats { display: flex; align-items: center; gap: 8px; }
+
+.mobile-settings-btn {
+  background: #27272a;
+  border: 2px solid #3f3f46;
+  color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* MASCOTA BOTE MINI */
+.mascot-interactive-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.speech-bubble {
+  background: #27272a;
+  border: 2px solid #ef4444;
+  color: var(--text-primary);
+  padding: 14px 18px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.speech-bubble:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25);
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: #27272a transparent;
+  display: block;
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 11px 11px 0;
+  border-style: solid;
+  border-color: #ef4444 transparent;
+  display: block;
+}
+
+.tip-tag { font-size: 0.72rem; font-weight: 800; color: #fca5a5; margin-bottom: 4px; }
+.tip-message { font-size: 0.95rem; font-weight: 600; line-height: 1.35; }
+
+.mascot-wrapper {
+  width: 110px;
+  height: 110px;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: mascotFloat 3.2s ease-in-out infinite;
+}
+
+@keyframes mascotFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.mascot-wrapper:hover {
+  animation-play-state: paused;
+  transform: scale(1.1) rotate(4deg);
+}
+
+.mascot-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 6px 12px rgba(220, 38, 38, 0.4));
+}
+
+.eye-lid {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: eyeBlink 3.8s ease-in-out infinite;
+}
+
+@keyframes eyeBlink {
+  0%, 93%, 100% { transform: scaleY(1); }
+  95%, 97% { transform: scaleY(0.08); }
+}
+
+.pupil-track { animation: pupilShift 4.5s ease-in-out infinite; }
+
+@keyframes pupilShift {
+  0%, 38%, 100% { transform: translate(0, 0); }
+  44%, 66% { transform: translate(-2.5px, 0.5px); }
+  72%, 92% { transform: translate(2.5px, -0.5px); }
+}
+
+.mouth-animated {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mouthTalk 3.5s ease-in-out infinite;
+}
+
+@keyframes mouthTalk {
+  0%, 100% { transform: scaleY(1) translateY(0); }
+  30% { transform: scaleY(1.3) translateY(-1px); }
+  50% { transform: scaleY(0.85) translateY(1px); }
+  70% { transform: scaleY(1.2) translateY(-0.5px); }
+}
+
+.mouth-talking-active { animation: mouthActiveTalk 0.5s ease-in-out 3; }
+
+@keyframes mouthActiveTalk {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.4) translateY(-1px); }
+}
+
+/* ENVASE REAL TIPO FOTO DE PRODUCTO */
+.tambo-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.tambo-container {
+  width: 230px;
+  height: 280px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.whey-real-cap {
+  position: absolute;
+  top: 0;
+  width: 165px;
+  height: 38px;
+  background: linear-gradient(180deg, #27272a 0%, #09090b 100%);
+  border-radius: 12px 12px 4px 4px;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7), inset 0 2px 0 #3f3f46;
+  border: 1px solid #18181b;
+}
+
+.cap-grooves {
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, transparent, transparent 4px, #3f3f46 4px, #3f3f46 6px);
+  opacity: 0.3;
+}
+
+.whey-real-tub {
+  width: 195px;
+  height: 250px;
+  background: #09090b;
+  border: 4px solid #18181b;
+  border-radius: 20px 20px 48px 48px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.9), 0 12px 30px rgba(0, 0, 0, 0.7);
+}
+
+.tub-background-label {
+  position: absolute;
+  inset: 0;
+  padding: 30px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.25;
+}
+
+.brand-header { font-size: 1.6rem; font-weight: 900; color: #ffffff; letter-spacing: -0.5px; }
+.brand-sub { font-size: 0.65rem; font-weight: 800; color: #dc2626; letter-spacing: 1px; }
+.brand-badge { margin-top: 10px; font-size: 0.7rem; background: #27272a; padding: 2px 8px; border-radius: 4px; color: #a1a1aa; }
+
+/* REVELADO AL LLENAR EL BOTE */
+.whey-fill-level {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+  transition: height 0.85s cubic-bezier(0.34, 1.25, 0.64, 1);
+  overflow: hidden;
+}
+
+.tub-filled-label {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.brand-header-fill { font-size: 1.7rem; font-weight: 900; color: #ffffff; text-shadow: 0 2px 4px rgba(0,0,0,0.5); letter-spacing: -0.5px; }
+.brand-sub-fill { font-size: 0.65rem; font-weight: 900; color: #fca5a5; letter-spacing: 1px; }
+.brand-badge-fill { margin-top: 6px; font-size: 0.68rem; font-weight: 800; background: #09090b; color: #ffffff; padding: 3px 10px; border-radius: 999px; }
+
+.tambo-ticks {
+  position: absolute;
+  right: -5px;
+  top: 40px;
+  bottom: 10px;
+  width: 40px;
+  pointer-events: none;
+  z-index: 8;
+}
+
+.tick {
+  position: absolute;
+  right: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #71717a;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tick::before { content: ''; width: 8px; height: 2px; background: #3f3f46; display: inline-block; }
+
+.tambo-wave-track {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  width: 100%;
+  height: 32px;
+  pointer-events: none;
+}
+
+.tambo-wave { position: absolute; top: 0; left: 0; width: 250%; height: 100%; }
+.wave-front { animation: waveContinuousFront 2.2s linear infinite; }
+@keyframes waveContinuousFront { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+
+.tambo-splash { animation: tamboBounce 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes tamboBounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.05) translateY(-5px); }
+  75% { transform: scale(0.98) translateY(2px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+.tambo-readout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+}
+
+.percentage-big {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.intake-badge {
+  font-size: 0.95rem;
+  color: #ffffff;
+  font-weight: 800;
+  background: rgba(9, 9, 11, 0.75);
+  padding: 4px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.target-status-pill {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fca5a5;
+  background: rgba(220, 38, 38, 0.2);
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 2px solid #dc2626;
+}
+
+/* BOTÓN ÚNICO */
+.quick-intake-section { display: flex; flex-direction: column; gap: 12px; }
+.section-heading { font-size: 1.15rem; font-weight: 800; color: var(--text-primary); }
+.single-option-grid { display: grid; grid-template-columns: 1fr; }
+
+.duo-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #3f3f46;
+  background: #27272a;
+  color: var(--text-primary);
+  box-shadow: 0 4px 0 #18181b;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  text-align: left;
+}
+
+.duo-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #18181b;
+}
+
+.duo-btn-single-take {
+  border-color: #ef4444;
+  background: linear-gradient(135deg, #27272a 0%, #18181b 100%);
+  box-shadow: 0 6px 0 #991b1b;
+}
+
+.btn-svg-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.custom-drink-svg { width: 100%; height: 100%; filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.4)); }
+.btn-info { display: flex; flex-direction: column; }
+.btn-title { font-size: 1.05rem; font-weight: 900; color: #ffffff; }
+.btn-subtitle { font-size: 0.82rem; font-weight: 600; color: #a1a1aa; }
+
+.duo-btn-notif {
+  width: 100%;
+  justify-content: center;
+  background: rgba(220, 38, 38, 0.2);
+  border-color: #ef4444;
+  box-shadow: 0 4px 0 #991b1b;
+  color: #fca5a5;
+  font-size: 0.9rem;
+  padding: 12px;
+}
+
+.duo-btn-primary {
+  width: 100%;
+  justify-content: center;
+  background-color: var(--whey-primary);
+  border-color: var(--whey-dark);
+  box-shadow: 0 4px 0 var(--whey-shadow);
+  color: white;
+  font-size: 1.05rem;
+  padding: 14px;
+}
+
+.undo-wrapper { display: flex; justify-content: center; margin-top: 4px; }
+.text-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+/* LATERAL DERECHO */
+.right-sidebar {
+  width: var(--right-width);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.top-stats-row { display: flex; justify-content: space-between; gap: 12px; }
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.streak-pill { background-color: var(--flame-bg); color: var(--flame-color); border: 2px solid var(--flame-border); }
+.protein-pill { background-color: var(--whey-light-bg); color: #fca5a5; border: 2px solid var(--whey-border); }
+
+.duo-card {
+  background: #27272a;
+  border: 2px solid #3f3f46;
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.streak-feature-card { border-color: #fdba74; border-bottom: 5px solid #ea580c; }
+.notification-card { border-color: #ef4444; border-bottom: 5px solid #991b1b; }
+
+.duo-card-header { display: flex; align-items: center; gap: 12px; }
+.flame-big { font-size: 2.2rem; animation: flameWiggle 1.8s infinite ease-in-out; }
+
+.streak-days-row { display: flex; justify-content: space-between; gap: 4px; padding-top: 4px; }
+.day-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+.day-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
+.day-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #3f3f46;
+  background: #18181b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #a1a1aa;
+}
+
+.day-circle.completed { background: #ef4444; border-color: #dc2626; color: white; }
+.day-circle.today { border-color: var(--flame-color); box-shadow: 0 0 0 2px #fed7aa; }
+
+.card-subtitle { font-size: 0.78rem; font-weight: 800; color: #a1a1aa; }
+.tip-body-text { font-size: 0.88rem; line-height: 1.4; color: var(--text-primary); font-weight: 600; }
+
+.challenge-content { display: flex; gap: 12px; align-items: center; }
+.challenge-icon { font-size: 2rem; background: #854d0e; border-radius: 14px; padding: 6px; border: 2px solid #facc15; }
+.challenge-info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.challenge-bar-bg { width: 100%; height: 10px; background: #18181b; border-radius: 999px; overflow: hidden; }
+.challenge-bar-fill { height: 100%; width: 0%; background: #22c55e; border-radius: 999px; transition: width 0.6s ease; }
+
+/* CELEBRACIONES Y MODALES */
+.fullscreen-celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.fullscreen-celebration.active { opacity: 1; pointer-events: auto; }
+
+.celebration-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(153, 27, 27, 0.95) 0%, rgba(9, 9, 11, 0.98) 100%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.streak-lost-backdrop {
+  background: radial-gradient(circle at center, rgba(127, 29, 29, 0.95) 0%, rgba(9, 9, 11, 0.98) 100%) !important;
+}
+
+.epic-stage {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  max-width: 460px;
+  padding: 24px;
+}
+
+.radiant-glow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.5) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glowPulse 2s infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+.water-glass-scene {
+  position: relative;
+  width: 140px;
+  height: 190px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.water-stream {
+  position: absolute;
+  top: -80px;
+  width: 18px;
+  height: 110px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, #ef4444 60%, #dc2626 100%);
+  border-radius: 10px;
+  opacity: 0;
+  box-shadow: 0 0 15px #ef4444;
+  z-index: 12;
+}
+
+.fullscreen-celebration.active .water-stream {
+  animation: streamFlow 1.2s ease-out forwards;
+}
+
+@keyframes streamFlow {
+  0% { transform: scaleY(0); opacity: 1; transform-origin: top; }
+  50% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(0); opacity: 0; }
+}
+
+.celebration-glass {
+  width: 110px;
+  height: 150px;
+  border: 6px solid #fca5a5;
+  border-top: none;
+  border-radius: 0 0 32px 32px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.4);
+}
+
+.glass-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+  transition: height 1.2s cubic-bezier(0.34, 1.25, 0.64, 1);
+}
+
+.spinning-glass-anim { animation: glassFillAndFlip 2.5s cubic-bezier(0.45, 0.05, 0.22, 1) forwards; }
+
+@keyframes glassFillAndFlip {
+  0% { transform: scale(1) rotate(0deg); }
+  45% { transform: scale(1.15) rotate(0deg); }
+  70% { transform: scale(1.3) rotateY(180deg); }
+  100% { transform: scale(0) rotateY(360deg); opacity: 0; }
+}
+
+.streak-reveal-scene {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: flamePop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes flamePop {
+  0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.mega-flame { font-size: 6.5rem; filter: drop-shadow(0 0 35px #f97316); animation: flameWiggle 1.4s infinite ease-in-out; }
+
+.streak-badge-popup {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: white;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: 3px solid #ffedd5;
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.streak-days-number { font-size: 1.5rem; font-weight: 900; }
+
+.broken-glass-stage {
+  width: 140px;
+  height: 150px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.broken-celebration-glass { border-color: #fca5a5 !important; box-shadow: 0 8px 32px rgba(239, 68, 68, 0.4) !important; }
+.glass-shatter-anim { animation: shatterVaso 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards !important; }
+
+@keyframes shatterVaso {
+  0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+  30% { transform: translateY(-15px) scale(1.08) rotate(5deg); }
+  60% { transform: translateY(20px) scale(1.1) rotate(-15deg); filter: blur(2px); }
+  100% { transform: translateY(50px) scale(0) rotate(45deg); opacity: 0; }
+}
+
+.extinguished-flame { font-size: 5rem; filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.6)); animation: flameExtinguish 1s ease-out; }
+
+@keyframes flameExtinguish {
+  0% { transform: scale(1.3); filter: grayscale(0%); }
+  100% { transform: scale(1); filter: grayscale(80%); }
+}
+
+.streak-down-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(239, 68, 68, 0.2);
+  border: 2px solid #fca5a5;
+  padding: 10px 28px;
+  border-radius: 20px;
+}
+
+.lost-streak-number { font-size: 3rem; font-weight: 900; color: #fca5a5; line-height: 1; }
+.lost-streak-label { font-size: 0.8rem; font-weight: 800; color: #fecaca; letter-spacing: 1px; }
+
+.streak-lost-title { color: #fca5a5 !important; }
+
+.streak-lost-btn {
+  background-color: #ef4444 !important;
+  border-color: #dc2626 !important;
+  box-shadow: 0 6px 0 #991b1b !important;
+}
+
+.celebration-headings { display: flex; flex-direction: column; gap: 6px; }
+.epic-title { color: #ffffff; font-size: 2rem; font-weight: 900; text-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+.epic-subtitle { color: #fca5a5; font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
+
+.duo-btn-epic {
+  width: 100%;
+  max-width: 320px;
+  justify-content: center;
+  background-color: #22c55e;
+  border-color: #16a34a;
+  box-shadow: 0 6px 0 #15803d;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 900;
+  padding: 16px;
+  margin-top: 10px;
+}
+
+/* MODALES */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 9, 11, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+.modal-card {
+  background: #27272a;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 26px;
+  border: 3px solid #3f3f46;
+  border-bottom: 6px solid #18181b;
+  padding: 24px 20px;
+  position: relative;
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-overlay.active .modal-card { transform: translateY(0) scale(1); }
+.onboarding-card { border-color: #ef4444; border-bottom-color: #991b1b; text-align: center; }
+.onboarding-mascot { font-size: 3.8rem; margin-bottom: 8px; animation: flameWiggle 2s infinite ease-in-out; }
+
+.close-modal-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #18181b;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-weight: 800;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.modal-title { font-size: 1.45rem; font-weight: 900; margin-bottom: 6px; color: #ffffff; }
+.modal-desc { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 18px; font-weight: 500; }
+
+.input-group { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+.input-group label { font-size: 0.88rem; font-weight: 700; color: #f4f4f5; }
+.input-group input { padding: 12px 14px; border-radius: 14px; border: 2px solid #3f3f46; background: #18181b; color: #ffffff; font-size: 1rem; font-weight: 600; outline: none; }
+
+.helper-text { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+
+.quick-goal-chips { display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
+.goal-chip {
+  background: #18181b;
+  border: 2px solid #3f3f46;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #a1a1aa;
+}
+
+.goal-chip.active { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; color: #fca5a5; }
+
+@keyframes flameWiggle { 0%, 100% { transform: rotate(-5deg) scale(1); } 50% { transform: rotate(5deg) scale(1.08); } }
+
+/* RESPONSIVIDAD */
+@media (max-width: 1024px) {
+  .right-sidebar { display: none; }
+  .main-content { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .left-sidebar { display: none; }
+  .mobile-top-header { display: flex; }
+  .main-content { padding: 16px 12px 36px; }
+  .tambo-container { width: 200px; height: 250px; }
+  .whey-real-tub { width: 170px; height: 220px; }
+  .whey-real-cap { width: 145px; }
+}

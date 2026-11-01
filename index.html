@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Whey Life - Reto Diario de Proteína en Polvo</title>
+  
+  <meta name="theme-color" content="#18181b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Tipografía estilo gamificado -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="duo-layout">
+
+    <!-- BARRA LATERAL IZQUIERDA -->
+    <aside class="left-sidebar">
+      <div class="logo-container">
+        <div class="wheylife-logo">
+          <span class="logo-icon">🥤</span>
+          <span class="logo-text">WHEY LIFE</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" id="navHomeBtn">
+          <span class="nav-icon">🥤</span>
+          <span class="nav-label">RETO HOY</span>
+        </button>
+
+        <button class="nav-item" id="navTipsBtn">
+          <span class="nav-icon">💡</span>
+          <span class="nav-label">CONSEJOS</span>
+        </button>
+
+        <button class="nav-item" id="navSettingsBtn">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">AJUSTES</span>
+        </button>
+
+        <button class="nav-item" id="navNotifBtn">
+          <span class="nav-icon">🔔</span>
+          <span class="nav-label">RECORDATORIOS</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-filler">
+        <div class="mascot-mini-card">
+          <div class="mini-mascot-avatar">🥤</div>
+          <div class="mini-mascot-text">
+            <strong>Bote Whey</strong>
+            <span>¡Tu suplemento diario!</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- COLUMNA CENTRAL -->
+    <main class="main-content">
+      
+      <header class="mobile-top-header">
+        <div class="wheylife-logo-mobile">
+          <span>🥤</span> <strong>WHEY LIFE</strong>
+        </div>
+        <div class="mobile-stats">
+          <div class="stat-pill streak-pill">
+            <span>🔥</span> <strong id="mobileStreakCount">0</strong>
+          </div>
+          <div class="stat-pill protein-pill">
+            <span>🥤</span> <strong id="mobileNavPercent">0%</strong>
+          </div>
+          <button class="mobile-settings-btn" id="mobileSettingsBtn">⚙️</button>
+        </div>
+      </header>
+
+      <!-- Mascota / Mini Botella de Proteína SVG -->
+      <section class="mascot-interactive-area">
+        <div class="speech-bubble clickeable-tip" id="speechBubble" title="¡Haz clic para ver un tip de proteína en polvo!">
+          <div class="tip-tag">💡 CONSEJO WHEY (Haz clic para cambiar)</div>
+          <div class="tip-message" id="mascotMessage">
+            ¡Qué onda bro! Mezcla tu proteína en polvo con agua o leche justo después de entrenar para una rápida absorción.
+          </div>
+        </div>
+
+        <div class="mascot-wrapper clickeable-mascot" id="mascotWrapper" title="¡Haz clic en el Bote de Proteína!">
+          <svg id="mascotSvg" viewBox="0 0 160 160" class="mascot-svg">
+            <ellipse cx="80" cy="148" rx="42" ry="8" fill="rgba(0, 0, 0, 0.25)" />
+            
+            <!-- Tapa de la Mini Botella -->
+            <rect x="44" y="22" width="72" height="16" rx="4" fill="#18181b" stroke="#09090b" stroke-width="2"/>
+            <line x1="48" y1="28" x2="112" y2="28" stroke="#3f3f46" stroke-width="2"/>
+            
+            <!-- Cuerpo del Pomo -->
+            <path d="M38 42 Q38 38 46 38 L114 38 Q122 38 122 42 L124 130 Q124 140 112 142 L48 142 Q36 140 36 130 Z" 
+                  fill="#27272a" stroke="#18181b" stroke-width="4"/>
+            
+            <!-- Etiqueta del Pomo -->
+            <rect x="38" y="52" width="84" height="74" rx="4" fill="#dc2626"/>
+            <path d="M38 52 L122 52 L122 88 L38 112 Z" fill="#18181b"/>
+
+            <text x="80" y="68" font-size="8" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">WHEY LIFE</text>
+            
+            <g id="eyesGroup" class="eyes-animated">
+              <g class="eye-lid left-eye">
+                <ellipse cx="62" cy="88" rx="6" ry="8" fill="#ffffff" />
+                <g class="pupil-track">
+                  <circle cx="62" cy="88" r="3" fill="#09090b" />
+                  <circle cx="63.5" cy="86.5" r="1.2" fill="#ffffff" />
+                </g>
+              </g>
+
+              <g class="eye-lid right-eye">
+                <ellipse cx="98" cy="88" rx="6" ry="8" fill="#ffffff" />
+                <g class="pupil-track">
+                  <circle cx="98" cy="88" r="3" fill="#09090b" />
+                  <circle cx="99.5" cy="86.5" r="1.2" fill="#ffffff" />
+                </g>
+              </g>
+            </g>
+
+            <!-- Cachetes -->
+            <circle cx="52" cy="96" r="4.5" fill="#fca5a5" opacity="0.6"/>
+            <circle cx="108" cy="96" r="4.5" fill="#fca5a5" opacity="0.6"/>
+
+            <!-- Boca -->
+            <path id="mascotMouth" class="mouth-animated" d="M72 98 Q80 108 88 98" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+            <g id="sunglasses" style="display: none;">
+              <rect x="50" y="80" width="24" height="16" rx="3" fill="#09090b"/>
+              <rect x="86" y="80" width="24" height="16" rx="3" fill="#09090b"/>
+              <line x1="74" y1="87" x2="86" y2="87" stroke="#09090b" stroke-width="3"/>
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <!-- ENVASE / POMO DE PROTEÍNA CENTRAL (TIPO IMAGEN) -->
+      <section class="tambo-stage">
+        <div class="tambo-container">
+          <div class="tambo-ticks">
+            <span class="tick" style="bottom: 85%;">100%</span>
+            <span class="tick" style="bottom: 65%;">75%</span>
+            <span class="tick" style="bottom: 45%;">50%</span>
+            <span class="tick" style="bottom: 25%;">25%</span>
+          </div>
+
+          <!-- Tapa negra estilizada -->
+          <div class="whey-real-cap">
+            <div class="cap-grooves"></div>
+          </div>
+
+          <!-- Cuerpo del Pomo -->
+          <div class="whey-real-tub">
+            <!-- Fondo vacío con silueta -->
+            <div class="tub-background-label">
+              <div class="brand-header">WHEY LIFE</div>
+              <div class="brand-sub">PROTEÍNA DE SUERO DE LECHE</div>
+              <div class="brand-badge">EN POLVO</div>
+            </div>
+
+            <!-- Nivel de llenado que revela la proteína en polvo/bote completo -->
+            <div class="whey-fill-level" id="proteinLiquid">
+              <div class="tub-filled-label">
+                <div class="brand-badge-fill">SUPLEMENTO ALIMENTICIO</div>
+              </div>
+              <div class="tambo-wave-track">
+                <svg class="tambo-wave wave-front" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                  <path d="M0,30 C150,0 350,50 500,30 C650,0 850,50 1000,30 C1150,0 1200,30 1200,30 L1200,60 L0,60 Z" fill="#b91c1c"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="tambo-readout">
+              <div class="percentage-big" id="proteinPercentage">0%</div>
+              <div class="intake-badge">
+                <span id="currentIntake">0</span> / <span id="goalIntake">2</span> tomas
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="target-status-pill" id="statusBadge">
+          🥤 Faltan <strong id="remainingIntake">2</strong> tomas para la meta de hoy
+        </div>
+      </section>
+
+      <!-- BOTÓN ÚNICO: TOMA DE PROTEÍNA -->
+      <section class="quick-intake-section">
+        <h3 class="section-heading">Registra tu suplementación</h3>
+        
+        <div class="action-grid single-option-grid">
+          <button class="duo-btn duo-btn-single-take" id="singleTakeBtn">
+            <div class="btn-svg-icon">
+              <svg viewBox="0 0 64 64" class="custom-drink-svg">
+                <rect x="20" y="10" width="24" height="8" rx="2" fill="#18181b"/>
+                <path d="M18 18 L46 18 L43 54 A4 4 0 0 1 39 58 L25 58 A4 4 0 0 1 21 54 Z" fill="#27272a" stroke="#18181b" stroke-width="2.5"/>
+                <rect x="20" y="28" width="24" height="20" fill="#dc2626"/>
+                <text x="32" y="41" font-size="7" font-weight="900" fill="#ffffff" text-anchor="middle">WHEY</text>
+              </svg>
+            </div>
+            <div class="btn-info">
+              <span class="btn-title">Toma de proteína</span>
+              <span class="btn-subtitle">+1 Toma completa de proteína en polvo</span>
+            </div>
+          </button>
+        </div>
+
+        <div class="undo-wrapper">
+          <button class="text-btn" id="undoBtn" disabled title="Solo puedes deshacer la última toma 1 vez">
+            ↩️ Deshacer última toma (Solo 1 vez)
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BARRA LATERAL DERECHA -->
+    <aside class="right-sidebar">
+      
+      <div class="top-stats-row">
+        <div class="stat-pill streak-pill" title="Días consecutivos cumplidos">
+          <span>🔥</span> <strong id="desktopStreakCount">0</strong>
+        </div>
+        <div class="stat-pill protein-pill" title="Porcentaje de hoy">
+          <span>🥤</span> <strong id="desktopNavPercent">0%</strong>
+        </div>
+      </div>
+
+      <!-- Tarjeta de Racha -->
+      <div class="duo-card streak-feature-card">
+        <div class="duo-card-header">
+          <span class="flame-big">🔥</span>
+          <div>
+            <h3>Tu Racha Diaria</h3>
+            <p id="desktopStreakAdvice">Cumple tus tomas diarias para no perder la racha.</p>
+          </div>
+        </div>
+
+        <div class="streak-days-row" id="weekPills"></div>
+      </div>
+
+      <!-- Tarjeta de Recordatorios -->
+      <div class="duo-card notification-card">
+        <h4 class="card-subtitle">🔔 RECORDATORIOS CELULAR</h4>
+        <p class="tip-body-text" style="font-size: 0.82rem;">
+          Recibe notificaciones en tu celular para que no olvides tu toma de proteína en polvo.
+        </p>
+
+        <button class="duo-btn duo-btn-notif" id="toggleNotificationsBtn">
+          <span>🔔</span> Activar Notificaciones
+        </button>
+        <small id="notifStatusText" style="font-size:0.75rem; color:#64748b; font-weight:700; text-align:center;"></small>
+      </div>
+
+      <!-- Tarjeta de Tip -->
+      <div class="duo-card tip-card">
+        <h4 class="card-subtitle">💡 TIPS DE SUPLMENTACIÓN</h4>
+        <p class="tip-body-text" id="sideTipText">
+          Tomar tu proteína en polvo agitándola bien en tu shaker garantiza una disolución óptima sin grumos.
+        </p>
+      </div>
+
+      <!-- Tarjeta de Desafío -->
+      <div class="duo-card challenge-card">
+        <h4 class="card-subtitle">🎯 DESAFÍO WHEY LIFE</h4>
+        <div class="challenge-content">
+          <div class="challenge-icon">⚡</div>
+          <div class="challenge-info">
+            <strong>Meta Diaria de Tomas</strong>
+            <span id="challengeSub">Alcanza el 100% de tus tomas</span>
+            <div class="challenge-bar-bg">
+              <div class="challenge-bar-fill" id="challengeBarFill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- CELEBRACIÓN DE META CUMPLIDA -->
+  <div class="fullscreen-celebration" id="epicCelebration">
+    <div class="celebration-backdrop"></div>
+    
+    <div class="epic-stage">
+      <div class="radiant-glow"></div>
+
+      <div class="water-glass-scene" id="glassScene">
+        <div class="water-stream" id="waterStream"></div>
+        <div class="splash-particles">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="celebration-glass" id="spinningGlass">
+          <div class="glass-liquid" id="glassLiquid">
+            <div class="liquid-foam"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="streak-reveal-scene" id="streakScene">
+        <div class="mega-flame">🔥</div>
+        <div class="streak-badge-popup">
+          <span class="streak-sparkle">✨</span>
+          <span class="streak-days-number" id="celebrationDaysCount">1 DÍA</span>
+          <span class="streak-sparkle">✨</span>
+        </div>
+      </div>
+
+      <div class="celebration-headings">
+        <h1 class="epic-title">¡META DE TOMAS CUMPLIDA!</h1>
+        <p class="epic-subtitle" id="celebrationSubtitle">
+          ¡Completaste todas tus tomas de proteína en polvo de hoy y tu racha sigue encendida!
+        </p>
+      </div>
+
+      <button class="duo-btn duo-btn-epic" id="closeCelebrationBtn">
+        ¡VAMOS CON TODO! 🚀
+      </button>
+    </div>
+  </div>
+
+  <!-- CELEBRACIÓN DE PÉRDIDA DE RACHA -->
+  <div class="fullscreen-celebration streak-lost-celebration" id="streakLostModal">
+    <div class="celebration-backdrop streak-lost-backdrop"></div>
+    
+    <div class="epic-stage">
+      <div class="broken-glass-stage">
+        <div class="celebration-glass broken-celebration-glass" id="fallingGlass">
+          <div class="glass-liquid" style="height: 30%;">
+            <div class="liquid-foam"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="extinguished-flame">💔🔥</div>
+
+      <div class="streak-down-counter">
+        <span class="lost-streak-number" id="lostStreakDisplay">0</span>
+        <span class="lost-streak-label">RACHA ANTERIOR</span>
+      </div>
+
+      <div class="celebration-headings">
+        <h1 class="epic-title streak-lost-title">¡OH NO! RACHA PERDIDA</h1>
+        <p class="epic-subtitle">
+          Pasaron 24 horas sin completar tus tomas de proteína en polvo. ¡Hoy es un excelente día para iniciar una nueva racha!
+        </p>
+      </div>
+
+      <button class="duo-btn duo-btn-epic streak-lost-btn" id="closeStreakLostBtn">
+        ¡REINICIAR MI RACHA HOY! 🔥
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL DE ONBOARDING (CONFIGURACIÓN DE META EN TOMAS) -->
+  <div class="modal-overlay" id="onboardingModal">
+    <div class="modal-card onboarding-card">
+      <div class="onboarding-mascot">
+        <span>🥤</span>
+      </div>
+      <h2 class="modal-title">¡Bienvenido a Whey Life!</h2>
+      <p class="modal-desc">
+        Elige tu Meta en TOMAS diarias de proteína en polvo:
+      </p>
+
+      <div class="input-group">
+        <label for="onboardingManualGoal">Meta en TOMAS al día:</label>
+        <input type="number" id="onboardingManualGoal" value="2" placeholder="2" min="1" max="10" step="1">
+        <small class="helper-text">Por ejemplo: 2 tomas de proteína al día (mañana y post-entreno).</small>
+      </div>
+
+      <div class="quick-goal-chips">
+        <button type="button" class="goal-chip" data-goal="1">1 Toma</button>
+        <button type="button" class="goal-chip active" data-goal="2">2 Tomas</button>
+        <button type="button" class="goal-chip" data-goal="3">3 Tomas</button>
+        <button type="button" class="goal-chip" data-goal="4">4 Tomas</button>
+      </div>
+
+      <button type="button" class="duo-btn duo-btn-primary" id="onboardingSubmitBtn" style="margin-top: 18px;">
+        ¡Iniciar Reto Whey Life! 🥤
+      </button>
+
+      <div style="margin-top: 8px;">
+        <button type="button" class="text-btn" id="onboardingSkipBtn">
+          Usar 2 Tomas por defecto y comenzar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE AJUSTES -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-card">
+      <button class="close-modal-btn" id="closeSettingsBtn">✕</button>
+      <h2 class="modal-title">⚙️ Ajustes de Meta</h2>
+      <p class="modal-desc">Cambia cuántas tomas de proteína deseas realizar al día.</p>
+
+      <form id="manualForm">
+        <div class="input-group">
+          <label for="inputManualGoal">Meta en TOMAS de proteína al día:</label>
+          <input type="number" id="inputManualGoal" placeholder="2" min="1" max="10" step="1" required>
+        </div>
+        <button type="submit" class="duo-btn duo-btn-primary" style="margin-top: 14px;">Guardar Meta</button>
+      </form>
+
+      <div style="margin-top: 16px; border-top: 2px dashed #e2e8f0; padding-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+        <button type="button" class="duo-btn duo-btn-medium" id="testNotifBtn">
+          🧪 Probar Notificación Ahora
+        </button>
+        <button type="button" class="text-btn" id="resetOnboardingBtn" style="color: #dc2626; font-size: 0.85rem;">
+          🔄 Volver a elegir Meta en Tomas
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
